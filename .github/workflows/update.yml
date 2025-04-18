@@ -2,7 +2,7 @@ name: subsCollector
 
 on:
   schedule:
-    - cron: '*/60 * * * *'
+    - cron: '0 */1 * * *'
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -22,7 +24,7 @@ jobs:
         run: |
           git config --global user.email "Smy99999@qq.com"
           git config --global user.name "aFleurdelys"
-          git remote set-url origin https://github.com/aFleurdelys/v2ray-configs.git
+          git remote set-url origin https://${{ secrets.TOKEN }}@github.com/aFleurdelys/v2ray-configs.git
       
       - name: Install dependencies
         run: |
