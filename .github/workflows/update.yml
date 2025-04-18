@@ -1,4 +1,4 @@
-name: python V2rayCollector Script
+name: subsCollector
 
 on:
   schedule:
