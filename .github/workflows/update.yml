@@ -1,0 +1,39 @@
+name: python V2rayCollector Script
+
+on:
+  schedule:
+    - cron: '*/60 * * * *'
+  workflow_dispatch:
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "Smy99999@qq.com"
+          git config --global user.name "aFleurdelys"
+          git remote set-url origin https://github.com/aFleurdelys/v2ray-configs.git
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests
+          python -m pip install beautifulsoup4
+
+      - name: Run Python script
+        run: |
+          python main.py  # Replace with your script's path
+          git add -A
+          git commit -m "The servers have been updated✔ - $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
+          git pull --rebase origin master
+          git push
