@@ -1,4 +1,4 @@
-name: subsCollector
+name: convert subscription
 
 on:
   schedule:
@@ -11,30 +11,26 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Install Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Configure Git
-        run: |
-          git config --global user.email "Smy99999@qq.com"
-          git config --global user.name "aFleurdelys"
-          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/aFleurdelys/v2ray-configs.git
-      
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install requests
-          python -m pip install beautifulsoup4
+          python -m pip install requests beautifulsoup4
 
       - name: Run Python script
         run: |
-          python main.py  # Replace with your script's path
+          python main.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           git add -A
           git commit -m "The servers have been updated✔ - $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')"
           git pull --rebase origin master
