@@ -1,8 +1,8 @@
-name: convert subscription
+name: TG-Sub
 
 on:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '0 0/4 * * *'
   workflow_dispatch:
 
 jobs:
